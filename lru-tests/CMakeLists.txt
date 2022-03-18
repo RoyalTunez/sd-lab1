@@ -1,7 +1,7 @@
 cmake_minimum_required (VERSION 3.8)
 
 include_directories(
-	../lru
+	../lru-src
 )
 
 include(FetchContent)
@@ -17,4 +17,4 @@ enable_testing()
 
 add_executable(tests ListTest.cpp LruCacheTest.cpp)
 
-target_link_libraries(tests gtest_main lru)
+target_link_libraries(tests gtest_main)

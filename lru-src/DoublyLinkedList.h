@@ -1,4 +1,5 @@
 #pragma once
+
 #include <cassert>
 
 template<class T>
@@ -10,19 +11,22 @@ class DoublyLinkedList
 	friend class Node<T>;
 public:
 
-	Node<T>* peekFirst() {
+	Node<T>* peekFirst()
+	{
 		assert(!empty());
+
 		return head;
 	}
 
-
-	Node<T>* addFirst(T t) {
+	Node<T>* addFirst(T t)
+	{
 		Node<T>* node = new Node<T>(this, t);
 
 		if (empty()) {
 			head = node;
 			tail = node;
-		} else {
+		}
+		else {
 			node->next = head;
 			head->prev = node;
 			head = node;
@@ -32,8 +36,14 @@ public:
 		return node;
 	}
 
-	Node<T>* removeLast() {
-		assert(!empty(), "List is empty.");
+	size_t size() const
+	{
+		return list_size;
+	}
+
+	Node<T>* removeLast()
+	{
+		assert(!empty());
 
 		Node<T>* last = tail;
 		last->remove();
@@ -41,18 +51,15 @@ public:
 		return last;
 	}
 
-	size_t size() const {
-		return list_size;
-	}
-
-	bool empty() const {
+	bool empty() const
+	{
 		if (head == nullptr) {
 			assert(tail == nullptr);
 			return true;
 		}
+
 		return false;
 	}
-
 
 private:
 	Node<T> *head = nullptr, *tail = nullptr;
@@ -64,19 +71,21 @@ template<class T>
 class Node
 {
 	friend class DoublyLinkedList<T>;
-
 public:
-	Node(DoublyLinkedList<T>* father, T t) {
+	Node(DoublyLinkedList<T>* father, T t)
+	{
 		this->list = father;
 		this->value = t;
 	}
 
-	T getValue() const {
+	T getValue() const
+	{
 		return value;
 	}
 
-	void remove() {
-		assert(!deleted, "This node is already deleted.");
+	void remove()
+	{
+		assert(!deleted);
 		assert(!list->empty());
 
 		deleted = true;
@@ -93,10 +102,12 @@ public:
 		if (this == list->head) {
 			list->head = list->head->next;
 		}
+
 		if (this == list->tail) {
 			list->tail = list->tail->prev;
 		}
 	}
+
 private:
 	T value;
 	bool deleted = false;
